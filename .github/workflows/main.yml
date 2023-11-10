@@ -24,3 +24,20 @@ jobs:
         run: |
           ./gradlew build
           ./gradlew test
+          
+pre-push:
+    name: Pre-Push Tests
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Run Tests Before Push
+        run: ./gradlew test
